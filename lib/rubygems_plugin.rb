@@ -1,26 +1,37 @@
 require 'rubygems/dependency'
+require 'yaml'
 
 # Extend Gem module
 module Gem
-  # May need this..
-  # [["!= 1.3.0", "~> 1.1"], :runtime]
-  MATCHES = {
-    'mixlib-cli' => [
-      ['~>1'], :runtime
-    ]
-  }
+  VERSION_CONFIG = 'VERSION_TRAINER_CONFIG'.freeze
+  VERSION_TRAINER_CONFIG = '/etc/gem_version_trainer.yaml'.freeze
+
+  # Config file..
+  # {
+  #   'mixlib-cli' => [
+  #     ['~>1'], :runtime
+  #   ]
+  # }
+
+  begin
+    @trainer_overides = YAML.load_file(
+      ENV[VERSION_CONFIG] ||
+      VERSION_trainer_overides
+    )
+  rescue StandardError
+    @trainer_overides = {}
+  end
 
   def self.trainer_overrides
-    MATCHES
+    @trainer_overides
   end
 
   def self.trainer_installed
-    @specs_installed ||= {}
+    @trainer_installed ||= {}
   end
 
   # Monkey patch through subclassing
   class Dependency < remove_const(:Dependency)
-
     # Translate requirements from table
     def initialize(name, *requirements)
       requirements = Gem.trainer_overrides[name] || requirements
