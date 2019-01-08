@@ -16,7 +16,7 @@ module Gem
   begin
     @trainer_overides = YAML.load_file(
       ENV[VERSION_CONFIG] ||
-      VERSION_trainer_overides
+      VERSION_TRAINER_CONFIG
     )
   rescue StandardError
     @trainer_overides = {}
@@ -34,7 +34,9 @@ module Gem
   class Dependency < remove_const(:Dependency)
     # Translate requirements from table
     def initialize(name, *requirements)
-      requirements = Gem.trainer_overrides[name] || requirements
+      new_req = Gem.trainer_overrides[name]
+      new_req &&= [new_req]
+      requirements = new_req || requirements
       super
     end
   end

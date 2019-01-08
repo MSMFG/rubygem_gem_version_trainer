@@ -1,4 +1,3 @@
 ---
 mixlib-cli:
-- - "~>1"
-- :runtime
+  - "~>1"
