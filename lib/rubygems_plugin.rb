@@ -6,13 +6,6 @@ module Gem
   VERSION_CONFIG = 'VERSION_TRAINER_CONFIG'.freeze
   VERSION_TRAINER_CONFIG = '/etc/gem_version_trainer.yaml'.freeze
 
-  # Config file..
-  # {
-  #   'mixlib-cli' => [
-  #     ['~>1'], :runtime
-  #   ]
-  # }
-
   begin
     @trainer_overides = YAML.load_file(
       ENV[VERSION_CONFIG] ||
