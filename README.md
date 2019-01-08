@@ -11,6 +11,7 @@ to provide some means of pinning whilst awaiting an upstream fix from the gem ma
 
 ## Example use
 
+Override behaviour (note in this case there is an overall failure so the warning does not appear)
 ```
 C02T6183G8WL:gem_version_trainer andrew.smith$ gem install sensu-plugin:3.0.0
 ERROR:  Error installing sensu-plugin:
@@ -34,4 +35,22 @@ Parsing documentation for sensu-plugin-3.0.0
 Installing ri documentation for sensu-plugin-3.0.0
 Done installing documentation for mixlib-cli, sensu-plugin after 1 seconds
 2 gems installed
+```
+NOTE: Without specifying VERSION_TRAINER_CONFIG environment variable to locate the YAML config the gem will automatically look at /etc/gem_version_trainer.yaml.
+
+Warning behaviour
+```
+C02T6183G8WL:gem_version_trainer andrew.smith$ gem install net-sftp
+Fetching: net-ssh-5.1.0.gem (100%)
+Successfully installed net-ssh-5.1.0
+Fetching: net-sftp-2.1.2.gem (100%)
+NON specifc install of net-ssh:5.1.0 (requested >= 2.6.5)
+Successfully installed net-sftp-2.1.2
+Parsing documentation for net-ssh-5.1.0
+Installing ri documentation for net-ssh-5.1.0
+Parsing documentation for net-sftp-2.1.2
+Installing ri documentation for net-sftp-2.1.2
+Done installing documentation for net-ssh, net-sftp after 3 seconds
+2 gems installed
+C02T6183G8WL:gem_version_trainer andrew.smith$ 
 ```
